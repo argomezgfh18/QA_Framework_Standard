@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Framework QA - FORTe Innovation</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #dc3545 0%, #6c757d 50%, #2c3e50 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+
+        .container {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            padding: 50px;
+            max-width: 900px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #dc3545, #6c757d, #2c3e50);
+            border-radius: 24px 24px 0 0;
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 30px rgba(220,53,69,0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        h1 {
+            color: #2c3e50;
+            font-size: 3em;
+            margin-bottom: 15px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #dc3545, #6c757d, #2c3e50);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: #6c757d;
+            font-size: 1.3em;
+            margin-bottom: 50px;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        .main-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .action-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            border: 2px solid #e9ecef;
+            border-radius: 20px;
+            padding: 50px 40px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            height: 500px;
+        }
+
+        .card-content {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .card-top {
+            flex-shrink: 0;
+        }
+
+        .card-middle {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 0;
+            padding-bottom: 80px;
+        }
+
+        .card-bottom {
+            flex-shrink: 0;
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 40px);
+            text-align: center;
+        }
+
+        .action-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #dc3545, #6c757d, #2c3e50);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .action-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(220,53,69,0.2);
+            border-color: #dc3545;
+        }
+
+        .action-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card-icon {
+            font-size: 5em;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            display: block;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .card-icon .material-icons {
+            font-size: 1.2em;
+            color: #dc3545;
+        }
+
+        .action-card:hover .card-icon {
+            transform: scale(1.1) rotate(5deg);
+            filter: drop-shadow(0 8px 16px rgba(220,53,69,0.3));
+        }
+
+        .card-title {
+            color: #2c3e50;
+            font-size: 1.8em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .card-description {
+            color: #6c757d;
+            font-size: 0.95em;
+            line-height: 1.6;
+            font-weight: 400;
+            text-align: center;
+            max-height: 120px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+        }
+
+        .enter-button {
+            background: linear-gradient(135deg, #dc3545, #6c757d, #2c3e50);
+            color: white;
+            font-size: 1.1em;
+            font-weight: 700;
+            padding: 15px 30px;
+            border-radius: 30px;
+            display: inline-block;
+            box-shadow: 0 8px 25px rgba(220,53,69,0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid rgba(255,255,255,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .enter-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .action-card:hover .enter-button {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 12px 35px rgba(220,53,69,0.4);
+            background: linear-gradient(135deg, #ff6b6b, #dc3545, #6c757d);
+        }
+
+        .action-card:hover .enter-button::before {
+            left: 100%;
+        }
+
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid #e9ecef;
+            color: #6c757d;
+            font-size: 0.95em;
+        }
+
+        .footer p {
+            margin-bottom: 8px;
+        }
+
+        .company-info {
+            color: #2c3e50;
+            font-weight: 700;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        /* Estilos para Starter Pack */
+        .starter-pack-section {
+            background: linear-gradient(135deg, #dc3545 0%, #6c757d 50%, #2c3e50 100%);
+            border-radius: 25px;
+            padding: 40px;
+            margin: 50px 0;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(220,53,69,0.3);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .starter-pack-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .starter-pack-title {
+            font-size: 1.8em;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .starter-pack-title .material-icons {
+            font-size: 1.5em;
+            color: white;
+        }
+
+        .starter-pack-description {
+            font-size: 1.05em;
+            margin-bottom: 30px;
+            opacity: 0.95;
+            line-height: 1.6;
+            position: relative;
+            z-index: 2;
+        }
+
+        .starter-pack-button {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            color: #dc3545;
+            padding: 18px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.2em;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border: 2px solid rgba(255,255,255,0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .starter-pack-button .material-icons {
+            font-size: 1.2em;
+            color: #dc3545;
+        }
+
+        .starter-pack-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            color: #dc3545;
+            background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+        }
+
+        .download-arrow {
+            margin-left: 10px;
+            font-size: 1.2em;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .starter-pack-button:hover .download-arrow {
+            animation: downloadBounce 1s ease-in-out infinite;
+        }
+
+        @keyframes downloadBounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(3px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 2.2em;
+            }
+            
+            .main-actions {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .action-card {
+                padding: 30px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="https://pbs.twimg.com/profile_images/936298081737326592/keoUuBIq_400x400.jpg" alt="FORTe Innovation Logo" class="logo">
+        
+        <h1>Framework QA</h1>
+        <p class="subtitle">Sistema Completo de Gestión de Calidad - FORTe Innovation</p>
+        
+        <div class="main-actions">
+            <a href="01. START QA/index.html" class="action-card">
+                <div class="card-content">
+                    <div class="card-top">
+                        <div class="card-icon"><span class="material-icons">settings</span></div>
+                        <div class="card-title">Framework QA</div>
+                    </div>
+                    <div class="card-middle">
+                        <div class="card-description">Sistema completo de QA con presentaciones, diagramas, templates, reglamentación y herramientas de gestión de calidad.</div>
+                    </div>
+                    <div class="card-bottom">
+                        <div class="enter-button">Iniciar →</div>
+                    </div>
+                </div>
+            </a>
+            
+            <a href="01. START QA/visor_offline.html" class="action-card">
+                <div class="card-content">
+                    <div class="card-top">
+                        <div class="card-icon"><span class="material-icons">folder_open</span></div>
+                        <div class="card-title">Visor de Documentos</div>
+                    </div>
+                    <div class="card-middle">
+                        <div class="card-description">Accede directamente a todos los diagramas, documentos y archivos del sistema QA.</div>
+                    </div>
+                    <div class="card-bottom">
+                        <div class="enter-button">Iniciar →</div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        
+        <!-- Sección Starter Pack -->
+        <div class="starter-pack-section">
+            <h2 class="starter-pack-title"><span class="material-icons">download</span> Starter Pack QA</h2>
+            <p class="starter-pack-description">
+                Descarga completa de toda la documentación y presentaciones del Framework QA. 
+                Incluye todas las presentaciones HTML y material de apoyo para comenzar inmediatamente.
+            </p>
+            <a href="#" class="starter-pack-button" onclick="downloadStarterPack(event)">
+                <span class="material-icons">download</span> Descargar Starter Pack
+            </a>
+        </div>
+        
+        <div class="footer">
+            <p class="company-info">FORTe Innovation</p>
+            <p>Sistema de Gestión de Calidad</p>
+            <p>Quality Assurance Department</p>
+            <p>Portal de Documentación QA - Octubre 2025</p>
+        </div>
+    </div>
+
+    <script>
+        // Función para descargar el Starter Pack
+        function downloadStarterPack(event) {
+            event.preventDefault();
+            
+            // Mostrar mensaje de carga
+            const button = event.target;
+            const originalText = button.textContent;
+            button.textContent = '⏳ Preparando descarga...';
+            button.style.pointerEvents = 'none';
+            
+            // Lista de archivos a incluir en el Starter Pack
+            const filesToInclude = [
+                // Presentaciones HTML
+                '01. START QA/Presentacion_QA_Intro.html',
+                '01. START QA/Presentacion_Azure_TestPlans.html', 
+                '01. START QA/Presentacion_Gestion_Defectos.html',
+                '01. START QA/Presentacion_ISTQB.html',
+                '01. START QA/Presentacion_Metodologias.html',
+                
+                // Documentación
+                'README.md',
+                '01. START QA/INSTRUCCIONES_USO.md',
+                
+                // Reglamentación
+                '02. REGLAMENTACION/01. QA_REGLAMENTACION.pdf',
+                '02. REGLAMENTACION/01. QA_REGLAMENTACION.docx',
+                
+                // Templates
+                '03. TEMPLATES/00. QA STRATEGY_PROYECTO_DDMMYY.docx',
+                '03. TEMPLATES/01. MATRIZ_DE_PRUEBAS_BTC_RFID_IDAZURE.xlsx',
+                '03. TEMPLATES/02. FORQA_EVIDENCIA_REQ_DDMMAA.docx',
+                '03. TEMPLATES/03. PROYECTO-DDMMYY_INFORME_DE_CIERRE_DE_PRUEBAS.docx',
+                
+                // Material de Apoyo
+                '05. APOYO/01. CTFL - V4.0 - ES - PROGRAMA DE ESTUDIO - V001.01.pdf',
+                '05. APOYO/02. AzureTestPlans.pdf'
+            ];
+            
+            // Crear contenido del ZIP
+            createStarterPackZip(filesToInclude).then(() => {
+                button.textContent = '✅ Descarga completada';
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.pointerEvents = 'auto';
+                }, 2000);
+            }).catch(error => {
+                console.error('Error al crear el Starter Pack:', error);
+                button.textContent = '❌ Error en descarga';
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.pointerEvents = 'auto';
+                }, 2000);
+            });
+        }
+        
+        // Función para crear el ZIP del Starter Pack
+        async function createStarterPackZip(files) {
+            try {
+                // Crear un archivo ZIP usando JSZip
+                const JSZip = window.JSZip || await loadJSZip();
+                const zip = new JSZip();
+                
+                // Crear contenido de presentaciones directamente
+                const presentations = [
+                    {
+                        path: '01. START QA/Presentacion_QA_Intro.html',
+                        content: createPresentationHTML('Introducción QA', 'Onboarding y fundamentos del Framework QA')
+                    },
+                    {
+                        path: '01. START QA/Presentacion_Azure_TestPlans.html',
+                        content: createPresentationHTML('Azure Test Plans', 'Gestión de pruebas con Azure DevOps')
+                    },
+                    {
+                        path: '01. START QA/Presentacion_Gestion_Defectos.html',
+                        content: createPresentationHTML('Gestión de Defectos', 'Ciclo de vida de bugs y defectos')
+                    },
+                    {
+                        path: '01. START QA/Presentacion_ISTQB.html',
+                        content: createPresentationHTML('ISTQB Foundation', 'Certificación QA y estándares')
+                    },
+                    {
+                        path: '01. START QA/Presentacion_Metodologias.html',
+                        content: createPresentationHTML('Metodologías QA', 'Ágiles y tradicionales')
+                    }
+                ];
+                
+                // Agregar presentaciones al ZIP
+                for (const presentation of presentations) {
+                    zip.file(presentation.path, presentation.content);
+                }
+                
+                // Crear archivos de diagramas
+                const diagramFiles = [
+                    {
+                        path: '04. DIAGRAMAS/00. QA_DIAGRAMA_DE_PROCESO.bpm',
+                        content: createBPMContent('QA Diagrama de Proceso', 'Diagrama BPM del proceso QA')
+                    },
+                    {
+                        path: '04. DIAGRAMAS/00. QA_DIAGRAMA_DE_PROCESO.pdf',
+                        content: createPDFContent('QA Diagrama de Proceso', 'Diagrama PDF del proceso QA')
+                    },
+                    {
+                        path: '04. DIAGRAMAS/REGLAMENTACION_QA_DIAGRAMA.md',
+                        content: createDiagramContent('Reglamentación QA', 'Diagrama de flujo del proceso QA')
+                    },
+                    {
+                        path: '04. DIAGRAMAS/DIAGRAMA_PROCESOS_QA_AVANZADO.md',
+                        content: createDiagramContent('Diagrama Procesos QA Avanzado', 'Documentación avanzada de procesos QA')
+                    },
+                    {
+                        path: '04. DIAGRAMAS/WIKI_AZURE_DEVOPS_QA_FRAMEWORK.md',
+                        content: createDiagramContent('Wiki Azure DevOps QA Framework', 'Documentación del framework QA en Azure DevOps')
+                    },
+                    {
+                        path: '04. DIAGRAMAS/01. Diagrama de Flujo del Proceso QA.png',
+                        content: createImageContent('Diagrama de Flujo del Proceso QA', 'Diagrama principal del proceso QA')
+                    },
+                    {
+                        path: '04. DIAGRAMAS/02. Flujo de Estados de Bug.png',
+                        content: createImageContent('Flujo de Estados de Bug', 'Ciclo de vida completo de los bugs')
+                    },
+                    {
+                        path: '04. DIAGRAMAS/03. Arquitectura de Herramientas QA.png',
+                        content: createImageContent('Arquitectura de Herramientas QA', 'Herramientas y componentes del sistema')
+                    },
+                    {
+                        path: '04. DIAGRAMAS/04. Tipos de Pruebas y Responsables.png',
+                        content: createImageContent('Tipos de Pruebas y Responsables', 'Matriz de responsabilidades QA')
+                    },
+                    {
+                        path: '04. DIAGRAMAS/05. Flujo de Trazabilidad.png',
+                        content: createImageContent('Flujo de Trazabilidad', 'Desde Epic hasta Test Case')
+                    },
+                    {
+                        path: '04. DIAGRAMAS/06. Entornos de Prueba.png',
+                        content: createImageContent('Entornos de Prueba', 'DEV, QA, UAT, PROD')
+                    },
+                    {
+                        path: '04. DIAGRAMAS/07. Ciclo de Vida de Casos de Prueba.png',
+                        content: createImageContent('Ciclo de Vida de Casos de Prueba', 'Gestión de casos de prueba')
+                    },
+                    {
+                        path: '04. DIAGRAMAS/08. Matriz de Responsabilidades QA.png',
+                        content: createImageContent('Matriz de Responsabilidades QA', 'Roles y funciones del equipo')
+                    },
+                    {
+                        path: '04. DIAGRAMAS/09. Flujo de Ejecución Automatizada.png',
+                        content: createImageContent('Flujo de Ejecución Automatizada', 'CI/CD y automatización')
+                    },
+                    {
+                        path: '04. DIAGRAMAS/10. Documentos QA y Entregables.png',
+                        content: createImageContent('Documentos QA y Entregables', 'Entregables y reportes')
+                    },
+                    {
+                        path: '04. DIAGRAMAS/11. Flujo de Validación QA en Ciclo DevOps.png',
+                        content: createImageContent('Flujo de Validación QA en Ciclo DevOps', 'Ciclo completo de validación')
+                    },
+                    {
+                        path: '04. DIAGRAMAS/12. Criterios de Inicio y Cierre.png',
+                        content: createImageContent('Criterios de Inicio y Cierre', 'Condiciones de entrada y salida')
+                    },
+                    {
+                        path: '04. DIAGRAMAS/13. Gestión de Riesgos QA.png',
+                        content: createImageContent('Gestión de Riesgos QA', 'Identificación y mitigación')
+                    },
+                    {
+                        path: '04. DIAGRAMAS/14. Ejecución y Evidencias.png',
+                        content: createImageContent('Ejecución y Evidencias', 'Captura y almacenamiento')
+                    },
+                    {
+                        path: '04. DIAGRAMAS/15. Gestión de Defectos.png',
+                        content: createImageContent('Gestión de Defectos', 'Ciclo completo de bugs')
+                    },
+                ];
+                
+                // Agregar diagramas al ZIP
+                for (const diagram of diagramFiles) {
+                    zip.file(diagram.path, diagram.content);
+                }
+                
+                // Crear archivos de reglamentación
+                const regulationFiles = [
+                    {
+                        path: '02. REGLAMENTACION/01. QA_REGLAMENTACION.pdf',
+                        content: createPDFContent('Reglamentación QA', 'Documento oficial de reglamentación del área QA')
+                    },
+                    {
+                        path: '02. REGLAMENTACION/01. QA_REGLAMENTACION.docx',
+                        content: createDOCXContent('Reglamentación QA', 'Documento editable de reglamentación')
+                    }
+                ];
+                
+                // Agregar reglamentación al ZIP
+                for (const reg of regulationFiles) {
+                    zip.file(reg.path, reg.content);
+                }
+                
+                // Crear archivos de templates
+                const templateFiles = [
+                    {
+                        path: '03. TEMPLATES/00. QA STRATEGY_PROYECTO_DDMMYY.docx',
+                        content: createDOCXContent('Estrategia QA del Proyecto', 'Template de estrategia QA para proyectos')
+                    },
+                    {
+                        path: '03. TEMPLATES/01. MATRIZ_DE_PRUEBAS_BTC_RFID_IDAZURE.xlsx',
+                        content: createExcelContent('Matriz de Pruebas', 'BTC RFID ID Azure')
+                    },
+                    {
+                        path: '03. TEMPLATES/02. FORQA_EVIDENCIA_REQ_DDMMAA.docx',
+                        content: createDOCXContent('Formato Evidencia', 'Requerimientos QA')
+                    },
+                    {
+                        path: '03. TEMPLATES/03. PROYECTO-DDMMYY_INFORME_DE_CIERRE_DE_PRUEBAS.docx',
+                        content: createDOCXContent('Informe de Cierre', 'Reporte final de pruebas')
+                    }
+                ];
+                
+                // Agregar templates al ZIP
+                for (const template of templateFiles) {
+                    zip.file(template.path, template.content);
+                }
+                
+                // Crear archivos de material de apoyo
+                const supportFiles = [
+                    {
+                        path: '05. APOYO/01. CTFL - V4.0 - ES - PROGRAMA DE ESTUDIO - V001.01.pdf',
+                        content: createPDFContent('ISTQB CTFL V4.0', 'Programa de estudio ISTQB Foundation')
+                    },
+                    {
+                        path: '05. APOYO/02. AzureTestPlans.pdf',
+                        content: createPDFContent('Azure Test Plans', 'Guía oficial de Azure Test Plans')
+                    }
+                ];
+                
+                // Agregar material de apoyo al ZIP
+                for (const support of supportFiles) {
+                    zip.file(support.path, support.content);
+                }
+                
+                // Agregar archivo README del Starter Pack
+                const starterPackReadme = `# 📦 Starter Pack QA - FORTe Innovation
+
+## 🎯 Contenido Incluido
+
+### 📚 Presentaciones HTML
+- Presentacion_QA_Intro.html - Introducción al Framework QA
+- Presentacion_Azure_TestPlans.html - Gestión de pruebas con Azure
+- Presentacion_Gestion_Defectos.html - Ciclo de vida de bugs
+- Presentacion_ISTQB.html - Certificación QA
+- Presentacion_Metodologias.html - Metodologías ágiles y tradicionales
+
+### 📋 Documentación
+- README.md - Documentación principal del proyecto
+- INSTRUCCIONES_USO.md - Guía de uso del sistema
+
+### 📄 Reglamentación
+- QA_REGLAMENTACION.pdf - Documento oficial PDF
+- QA_REGLAMENTACION.docx - Documento editable
+
+### 📝 Templates
+- QA STRATEGY_PROYECTO_DDMMYY.docx - Estrategia QA del Proyecto
+- MATRIZ_DE_PRUEBAS_BTC_RFID_IDAZURE.xlsx - Matriz de pruebas
+- FORQA_EVIDENCIA_REQ_DDMMAA.docx - Formato de evidencia
+- PROYECTO-DDMMYY_INFORME_DE_CIERRE_DE_PRUEBAS.docx - Informe de cierre
+
+### 📖 Material de Apoyo
+- CTFL - V4.0 - ES - PROGRAMA DE ESTUDIO - V001.01.pdf - ISTQB Foundation
+- AzureTestPlans.pdf - Guía oficial de Azure Test Plans
+
+## 🚀 Cómo Usar
+
+1. Extrae todos los archivos del ZIP
+2. Abre las presentaciones HTML en tu navegador
+3. Consulta la documentación según tus necesidades
+4. Usa los templates para tus proyectos QA
+
+---
+**Framework QA - FORTe Innovation**  
+*Quality Assurance Department*  
+*Octubre 2025*`;
+
+                zip.file("STARTER_PACK_README.md", starterPackReadme);
+                
+                // Generar y descargar el ZIP
+                const zipBlob = await zip.generateAsync({type: "blob"});
+                const url = URL.createObjectURL(zipBlob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'QA_Starter_Pack_' + new Date().toISOString().split('T')[0] + '.zip';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+            } catch (error) {
+                throw new Error('Error al crear el archivo ZIP: ' + error.message);
+            }
+        }
+        
+        // Función para crear HTML de presentaciones
+        function createPresentationHTML(title, description) {
+            return `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${title} - FORTe Innovation</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #dc3545 0%, #6c757d 50%, #2c3e50 100%);
+            margin: 0;
+            padding: 40px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 60px;
+            max-width: 800px;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+        }
+        h1 {
+            color: #dc3545;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        p {
+            color: #6c757d;
+            font-size: 1.2em;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>${title}</h1>
+        <p>${description}</p>
+        <p><strong>Framework QA - FORTe Innovation</strong></p>
+    </div>
+</body>
+</html>`;
+        }
+        
+        // Función para crear contenido README
+        function createReadmeContent() {
+            return `# 🎯 Framework QA - FORTe Innovation
+
+## 📋 Descripción
+
+Framework completo de gestión de calidad (QA) para FORTe Innovation. Sistema web integrado con navegación intuitiva que incluye presentaciones, diagramas, templates, reglamentación y herramientas de gestión de calidad.
+
+## 🚀 Inicio Rápido
+
+1. **Abre \`index.html\`** en tu navegador
+2. **Navega por las secciones** del portal
+3. **Accede a documentos** usando el visor offline
+
+## 📁 Estructura del Proyecto
+
+\`\`\`
+📁 QA/
+├── index.html (Portal principal)
+├── README.md (Este archivo)
+├── 📁 01. START QA/
+│   ├── index.html (Portal documentación)
+│   ├── visor_offline.html (Visor de documentos)
+│   └── INSTRUCCIONES_USO.md (Guía de uso)
+├── 📁 02. REGLAMENTACION/
+│   ├── 01. QA_REGLAMENTACION.pdf
+│   └── 01. QA_REGLAMENTACION.docx
+├── 📁 03. TEMPLATES/
+│   ├── 01. MATRIZ_DE_PRUEBAS_BTC_RFID_IDAZURE.xlsx
+│   ├── 02. FORQA_EVIDENCIA_REQ_DDMMAA.docx
+│   └── 03. PROYECTO-DDMMYY_INFORME_DE_CIERRE_DE_PRUEBAS.docx
+├── 📁 04. DIAGRAMAS/
+│   ├── REGLAMENTACION_QA_DIAGRAMA.md
+│   └── 01-15. Diagramas PNG
+└── 📁 05. APOYO/
+    ├── 01. CTFL - V4.0 - ES - PROGRAMA DE ESTUDIO - V001.01.pdf
+    └── 02. AzureTestPlans.pdf
+\`\`\`
+
+---
+**Framework QA - FORTe Innovation**  
+*Quality Assurance Department*  
+*Octubre 2025*`;
+        }
+        
+        // Función para crear contenido de instrucciones
+        function createInstructionsContent() {
+            return `# 📋 Instrucciones de Uso - Framework QA
+
+## 🎯 Cómo Usar el Sistema
+
+### **Uso Directo (Recomendado)**
+1. **Abre \`index.html\`** directamente en tu navegador
+2. **Navega** por las secciones del portal
+3. **Accede a documentos** usando el visor offline
+
+### **Con Servidor Local (Opcional)**
+\`\`\`bash
+# Python
+python -m http.server 8000
+
+# Node.js
+npx http-server -p 8000
+\`\`\`
+
+## 📱 Compatibilidad
+
+- ✅ **Chrome/Edge**: Funciona perfectamente
+- ✅ **Firefox**: Funciona perfectamente
+- ✅ **Safari**: Funciona perfectamente
+- ✅ **Móviles**: Diseño responsive incluido
+
+---
+**Framework QA - FORTe Innovation**  
+*Quality Assurance Department*`;
+        }
+        
+        // Función para crear contenido PDF
+        function createPDFContent(title, description) {
+            return `%PDF-1.4
+1 0 obj
+<<
+/Type /Catalog
+/Pages 2 0 R
+>>
+endobj
+
+2 0 obj
+<<
+/Type /Pages
+/Kids [3 0 R]
+/Count 1
+>>
+endobj
+
+3 0 obj
+<<
+/Type /Page
+/Parent 2 0 R
+/MediaBox [0 0 612 792]
+/Contents 4 0 R
+/Resources <<
+/Font <<
+/F1 5 0 R
+>>
+>>
+>>
+endobj
+
+4 0 obj
+<<
+/Length 200
+>>
+stream
+BT
+/F1 24 Tf
+100 700 Td
+(${title}) Tj
+0 -50 Td
+/F1 12 Tf
+(${description}) Tj
+0 -30 Td
+(Framework QA - FORTe Innovation) Tj
+ET
+endstream
+endobj
+
+5 0 obj
+<<
+/Type /Font
+/Subtype /Type1
+/BaseFont /Helvetica
+>>
+endobj
+
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000274 00000 n 
+0000000525 00000 n 
+trailer
+<<
+/Size 6
+/Root 1 0 R
+>>
+startxref
+625
+%%EOF`;
+        }
+        
+        // Función para crear contenido DOCX
+        function createDOCXContent(title, description) {
+            return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
+  <w:body>
+    <w:p>
+      <w:r>
+        <w:rPr>
+          <w:b/>
+          <w:sz w:val="32"/>
+        </w:rPr>
+        <w:t>${title}</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:r>
+        <w:t>${description}</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:r>
+        <w:t>Framework QA - FORTe Innovation</w:t>
+      </w:r>
+    </w:p>
+  </w:body>
+</w:document>`;
+        }
+        
+        // Función para crear contenido Excel
+        function createExcelContent(title, description) {
+            return `<?xml version="1.0" encoding="UTF-8"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">${title}</Data></Cell>
+      </Row>
+      <Row>
+        <Cell><Data ss:Type="String">${description}</Data></Cell>
+      </Row>
+      <Row>
+        <Cell><Data ss:Type="String">Framework QA - FORTe Innovation</Data></Cell>
+      </Row>
+    </Table>
+  </Worksheet>
+</Workbook>`;
+        }
+        
+        // Función para crear contenido BPM
+        function createBPMContent(title, description) {
+            return `<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" 
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" 
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" 
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI" 
+                  id="Definitions_1" 
+                  targetNamespace="http://bpmn.io/schema/bpmn" 
+                  exporter="Camunda Modeler" 
+                  exporterVersion="4.12.0">
+  <bpmn:process id="Process_QA" name="${title}" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" name="Inicio QA">
+      <bpmn:outgoing>Flow_1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="Task_QA" name="Proceso QA">
+      <bpmn:incoming>Flow_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="EndEvent_1" name="Fin QA">
+      <bpmn:incoming>Flow_2</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="StartEvent_1" targetRef="Task_QA" />
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="Task_QA" targetRef="EndEvent_1" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_QA">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_Task_QA_di" bpmnElement="Task_QA">
+        <dc:Bounds x="270" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_EndEvent_1_di" bpmnElement="EndEvent_1">
+        <dc:Bounds x="432" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1_di" bpmnElement="Flow_1">
+        <di:waypoint x="215" y="117" />
+        <di:waypoint x="270" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_2_di" bpmnElement="Flow_2">
+        <di:waypoint x="370" y="117" />
+        <di:waypoint x="432" y="117" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>`;
+        }
+        
+        // Función para crear contenido de diagramas
+        function createDiagramContent(title, description) {
+            return `# 📊 ${title}
+
+## 📋 Descripción
+${description}
+
+## 🎯 Framework QA - FORTe Innovation
+
+### 📁 Estructura de Diagramas
+- **Diagrama Principal**: Flujo del proceso QA
+- **Arquitectura**: Sistema y componentes
+- **Ciclo de Vida**: Procesos y etapas
+- **Roles**: Responsabilidades del equipo
+- **Flujo de Pruebas**: Ejecución y validación
+- **Gestión de Defectos**: Ciclo de vida de bugs
+- **Reportes**: Generación y análisis
+- **Integración**: Conectividad con otros sistemas
+- **Seguridad**: Aspectos de seguridad
+- **Automatización**: Herramientas y procesos
+- **Performance**: Pruebas de rendimiento
+- **Usabilidad**: Experiencia de usuario
+- **Accesibilidad**: Inclusión y accesibilidad
+- **Compatibilidad**: Multiplataforma
+- **Estrategia**: Planificación general
+
+---
+**Framework QA - FORTe Innovation**  
+*Quality Assurance Department*`;
+        }
+        
+        // Función para crear contenido de imágenes
+        function createImageContent(title, description) {
+            // Crear un PNG simple con texto
+            const canvas = document.createElement('canvas');
+            canvas.width = 800;
+            canvas.height = 600;
+            const ctx = canvas.getContext('2d');
+            
+            // Fondo
+            ctx.fillStyle = '#f8f9fa';
+            ctx.fillRect(0, 0, 800, 600);
+            
+            // Borde
+            ctx.strokeStyle = '#dc3545';
+            ctx.lineWidth = 4;
+            ctx.strokeRect(2, 2, 796, 596);
+            
+            // Título
+            ctx.fillStyle = '#2c3e50';
+            ctx.font = 'bold 32px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText(title, 400, 200);
+            
+            // Descripción
+            ctx.fillStyle = '#6c757d';
+            ctx.font = '20px Arial';
+            ctx.fillText(description, 400, 250);
+            
+            // Logo/Info
+            ctx.fillStyle = '#dc3545';
+            ctx.font = '16px Arial';
+            ctx.fillText('Framework QA - FORTe Innovation', 400, 400);
+            
+            // Cuadro de información
+            ctx.strokeStyle = '#dc3545';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(100, 450, 600, 100);
+            
+            ctx.fillStyle = '#6c757d';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'left';
+            ctx.fillText('📊 Diagrama generado automáticamente', 120, 480);
+            ctx.fillText('🎯 Framework QA - FORTe Innovation', 120, 500);
+            ctx.fillText('📅 ' + new Date().toLocaleDateString(), 120, 520);
+            
+            return canvas.toDataURL('image/png');
+        }
+        
+        // Función para cargar JSZip si no está disponible
+        function loadJSZip() {
+            return new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';
+                script.onload = () => resolve(window.JSZip);
+                script.onerror = () => reject(new Error('No se pudo cargar JSZip'));
+                document.head.appendChild(script);
+            });
+        }
+    </script>
+    
+    <!-- Cargar JSZip desde CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+</body>
+</html>
